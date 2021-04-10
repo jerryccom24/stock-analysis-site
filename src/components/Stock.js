@@ -1,48 +1,36 @@
-import React from 'react';
+import React, {Fragment,useEffect, useState} from "react";
 
+const Stock = () =>{
 
-class Stock extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      stockChartXValues: [],
-      stockChartYValues: []
+  const getAAPL = async () => {
+    try {
+      const response = await fetch("http://localhost:5000/AAPL");
+      const jsonData = await response.json();
+      console.log(jsonData);
+    } catch (err) {
+      console.error(err.message);
     }
   }
+  useEffect(() => {
+    getAAPL();
+  },[]);
 
-  componentDidMount() {
-    this.fetchStock();
-  }
-
-  fetchStock() {
-    const pointerToThis = this;
-    console.log(pointerToThis);
-    const API_KEY = 'HA1HKBE9DBJ318MEO';
-    let StockSymbol = 'FB';
-    let API_Call = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=${StockSymbol}&outputsize=full&apikey=${API_KEY}`;
-
-
-    fetch(API_Call)
-      .then(
-        function(response) {
-          return response.json();
-        }
-      )
-      .then(
-        function(data) {
-          console.log(data);
-        }
-      )
-  }
-
-  render() {
-    return (
-      <div>
-        <h1>Stock Market</h1>
-        
-      </div>
-    )
-  }
+  return(
+    <Fragment>
+      {" "}
+      <table>
+        <thead>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </thead>
+      </table>
+    </Fragment>
+  )
 }
+
 
 export default Stock;
